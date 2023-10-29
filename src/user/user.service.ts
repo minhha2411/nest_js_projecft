@@ -6,7 +6,7 @@ import { CreateUserDto } from './user.interface';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
@@ -19,5 +19,9 @@ export class UserService {
 
   async findUserByName(username: string): Promise<User> {
     return this.userModel.findOne({ username }).exec();
+  }
+
+  async findUserById(id: string): Promise<User> {
+    return this.userModel.findById({ id }).exec();
   }
 }
